@@ -3,22 +3,21 @@ const Schema = mongoose.Schema;
 
 //creat city schema and model
 
-const ItemSchema = new Schema({
+const citySchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
     country: {
         type: String,
         required: true,
     },
-    city: {
+    img: {
         type: String,
-        required: true,
-    },
-   date: {
-       type: Date,
-       default: Date.now
-   }
-    //add geo-location
+    }
 });
 
 
 
-module.exports = Item = mongoose.model('item', ItemSchema);;
+module.exports = cityModel = mongoose.model('city', citySchema);
