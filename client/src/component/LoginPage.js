@@ -1,0 +1,108 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import LoginHeaderMenu from './LoginHeaderMenu'
+import { Button, Form } from 'reactstrap';
+import Select from 'react-select';
+import axios from 'axios';
+
+
+class LoginPage extends Component {
+    
+    constructor() {
+        super();
+        this.state = {
+            email: 'Email',
+            password: 'Password',
+            userId: '',
+            cache: window.localStorage.getItem('cacheToken'),
+            logOutClass: 'logout-hide'
+            // logoutHide: 'logout-hide',
+            // logoutShow: 'logout-show',
+
+        }
+        this.handleChange_email = this.handleChange_email.bind(this);
+        this.handleChange_password = this.handleChange_password.bind(this);
+    }
+    componentDidMount() {
+        let newUser = this.state;
+
+        if(this.state.cache !== null){
+            this.setState({ logOutClass: 'logout-Show'})
+        } else {
+            this.setState({ logOutClass: 'logout-hide'})
+        }
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
+    handleChange_email = (event) => {
+        this.setState({email: event.target.value});
+    }
+    handleChange_password = (event) => {
+        this.setState({password: event.target.value});
+    }
+    
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let newUser = this.state; 
+        axios.post('/api/auth/login', newUser )
+            .then(res => {
+                this.setState({ userId: res.data.user.id})
+                window.localStorage.setItem('cacheToken', res.data.token);
+                window.localStorage.setItem('userId', res.data.user.id);
+                window.location.href = 'http://localhost:3000/LandingPage';
+            })
+            .catch(err => {
+                console.log(err); 
+            })        
+    }
+
+    handleLogOut = (event) => {
+        event.preventDefault();
+        window.localStorage.setItem('cacheToken', 'null');
+        window.localStorage.setItem('userId', 'null');
+        window.location.href = 'http://localhost:3000/LandingPage';        
+    }
+    render (){
+        return(
+            <div className="page">
+                <LoginHeaderMenu />
+                <Form className="loginForm" inline>
+                <h1 className="loginPageTItle">Login</h1>
+                        <div className="loginUpperDiv">
+                            <input className="textareaForm" type="text" name="email" placeholder={this.state.email}  
+                            onChange={this.handleChange_email}></input>  
+                        
+                            <input className="textareaForm" type="text" name="password" placeholder={this.state.password}  
+                            onChange={this.handleChange_password}></input>
+
+                            <div className="form-check terms-div">
+                                <input type="checkbox" /*onChange={this.handleChecked} checked={this.state.checkbox} */className="form-check-input" id="exampleCheck1" />
+                                <label className="form-check-label termsText" htmlFor="exampleCheck1">
+                                    Remember me 
+                                </label>
+                            </div>
+                        </div>
+                    
+                    <Button className="loginButtonSubmit" color="secondary" onClick={this.handleSubmit}>Submit</Button>
+                    <Button className="loginButton" color="danger"><a className="loginGoogleButton" href="http://localhost:5000/api/auth/google"> Log in with Google+ </a></Button>
+                    <Button className="loginButton" color="primary">Log in with Facebook</Button>
+                    <Link to='/CreatNewAccount'><p className="loginCreatNew">Create New Account</p></Link>
+                    {/* <Link to='/CreatNewAccount'> */}
+                    {/* </Link> */}
+                    <div onClick={this.handleLogOut} className={this.state.logOutClass}>
+                        <Link to='/LogOutConfirmation'>
+                            <button className="loginLogout">Log out</button>
+                            <span className="fas fa-sign-out-alt fa-2x loginLogoutIcon"></span>
+                        </Link>
+                    </div>
+
+                </Form>
+            </div>
+        )
+    }
+}
+
+export default LoginPage;

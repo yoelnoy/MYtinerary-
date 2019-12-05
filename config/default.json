@@ -1,0 +1,11 @@
+{
+    "mongoURI" : "mongodb+srv://yoelnoy:Yn198804@cluster0-j2dgd.mongodb.net/test?retryWrites=true&w=majority",
+    "secretOrKey": "MYtinerary_myJwtSecter",
+    "google": {
+        "clientID": "423934355673-4qj69v71n0aie3qh3bmqtubo9lmjf55t.apps.googleusercontent.com",
+        "clientSecret": "Sqxm1P8lbpXZCmj84LyA-jnh"
+    },
+    "session":{
+        "coockieKey":"Letsenjoyourtripsandvacations"
+    }
+}

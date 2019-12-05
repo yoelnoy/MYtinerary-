@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BackHeader from './BackHeader';
-import CitiesList from './CitiesList';
+// import CitiesList from './CitiesList';
+import CitiesList from './citiesList';
 
 
 
@@ -11,10 +12,9 @@ class Cities extends Component {
         
         
         return (
-            <div className="Cities-main">
+            <div className="page">
                 <BackHeader />
-                <h1>Cities</h1>
-                <CitiesList />
+                <CitiesList className="cityList-main" />
             </div>
         )
     }

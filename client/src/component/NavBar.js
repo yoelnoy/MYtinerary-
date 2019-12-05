@@ -14,7 +14,6 @@ Collapse,
     state = {
         isOpen: false
     }
-
     
     toggle = () =>{
         this.setState({
