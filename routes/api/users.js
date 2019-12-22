@@ -1,7 +1,7 @@
 const Express = require('express');
 const router = Express.Router();
 //User Model 
-const User = require('../../models/userModel'); 
+const User = require('../../models/UserModel'); 
 const bcrypt = require("bcryptjs");
 const jwt = require ('jsonWebToken');
 const config = require ('config');
