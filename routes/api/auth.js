@@ -74,10 +74,9 @@ router.get('/google/redirect', passport.authenticate('google', { session: false,
         { expiresIn: 87000 },
         (err, token) => {
             console.log(token);
-            
             if (err) throw err;
+            // window.localStorage.setItem('cacheToken', res);
             res.redirect('http://localhost:3000/LandingPage/'+ token) // need to add token like in normal login but how?!?!?!
-
         }
     )
 })

@@ -4,16 +4,52 @@ import { connect } from 'react-redux'
 import { getCities } from '../store/actions/cityAction'
 import { testing } from '../store/actions/cityAction'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import BackHeader from './BackHeader';
+
 
 
 class CitiesList extends Component {
-    
     state = {
-        search: ''
+        search: '',
+        itineraries: [],
+        cities: [],
+        numberOfItineraries: [],
+        spinner: true
     }
-
     componentDidMount(){
-        this.props.getCities ()        
+        this.props.getCities()   
+        axios.get('/api/itineraries')
+        .then(res => {
+            this.setState({ itineraries: res.data})
+           
+        axios.get('/api/cities')
+        .then(res => {
+            this.setState({ 
+                cities: res.data,
+                spinner: false
+            })            
+            let allItineraries = this.state.itineraries;
+            let allCities = this.state.cities;
+            let allNumberOfItineraries = []
+            let finalArray = []
+            for(let i = 0 ; i <allItineraries.length ; i++){
+                for(let j = 0 ; j <allCities.length ; j++){
+                    if((allItineraries[i].city === allCities[j].name) /*&& allItineraries[i].city ==  allItineraries[i]*/){
+                        allNumberOfItineraries.push(allItineraries[i])
+                    }
+                }
+            }
+            for(let i = 0 ; i <allCities.length ; i++){
+                for(let j = 0 ; j <allNumberOfItineraries.length ; j++){
+                    if((allCities[i].name === allNumberOfItineraries[j].city) /*&& allItineraries[i].city ==  allItineraries[i]*/){
+                        finalArray.push(allCities[i].name)
+                    }
+                }
+            }
+            console.log(finalArray);
+        })
+    })  
     }
 
     updateSearch(event) {
@@ -21,40 +57,73 @@ class CitiesList extends Component {
     }
 
     newCityInfo(event){
-        this.props.filterCities()    }
+        this.props.filterCities()    
+    }
     render() {
-        
+
         let filteredCities = this.props.cities
             .filter((city) =>  city.name.toLowerCase()
-                .startsWith(this.state.search.toLowerCase()));
-        return(
-            <div className="citiesList-main"> 
+                .startsWith(this.state.search.toLowerCase()));  
+                console.log(filteredCities);
 
+                let allItineraries = this.state.itineraries
+        
+        //my new try
+        let testingNew =  filteredCities.map((city) => {
+            console.log(city.name);
+                let someArray = []
+                for(let i = 0 ; i <allItineraries.length ; i++){
+                    if((allItineraries[i].city === city.name)){
+                        someArray.push(allItineraries[i])
+                    }
+                }
+
+            return(
+                <Link to={`/ChosenCity/${city.name}`} key={uuid()}>
+                    <button onClick={this.chooseACity} className="btn  cityListBtn" >
+                        <li className="cityLi" > 
+                            <span className="colon-number"> ( {someArray.length} ) </span>
+                            { city.name }
+                            {/* <span className="colon">-</span>  
+                            { city.country }    */}
+                        </li>
+                    </button>
+                </Link>
+            )
+        })
+        let data;
+        if (this.state.spinner){
+            data = 
+            <div className="spinner-div">
+                <div className="spinner-border spinner-icon" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        } else {
+            data = 
+            <div className="citiesList-main"> 
+                <BackHeader />
                 <div className="searchBar-main">
                     <div className="searchBar-input-div">
+                        
                         <input type="text"
                             placeholder="Search for your city" 
                             className="searchBar-input"
                             /*value={this.props}*/
                             onChange={this.updateSearch.bind(this)}  
                             />
+                            <span className="fas fa-search search-icon-filter"></span>
                     </div>
                 </div>
-
-                <ul>
-                    {filteredCities.map((city) => 
-                        <Link to={`/ChosenCity/${city.name}`} key={uuid()}>
-                        <button onClick={this.chooseACity} className="btn btn-primary cityListBtn" >
-                            <li className="cityLi" > 
-                                { city.name }
-                                <span className="colon">-</span> 
-                                { city.country }   
-                            </li>
-                        </button>
-                    </Link>
-                    )}
+                <ul className="cities-list-ul">
+                    {testingNew}
                 </ul>
-
+            </div>
+        }
+            
+        return(
+            <div>
+                {data}
             </div>
         )
     }

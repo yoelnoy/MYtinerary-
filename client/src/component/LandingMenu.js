@@ -9,36 +9,34 @@ class LandingMenu extends Component {
         this.state = {
             userOptions: false,
             dropdownOpen: false,
+            cacheGoogle: window.localStorage.getItem('cacheTokenGogle'),
             cache: window.localStorage.getItem('cacheToken'),
-            userId: window.localStorage.getItem('userId')
+            userId: window.localStorage.getItem('userId'),
+            loginIcon: 'landingPage-user-icon-hide',
+            logoutIcon: 'landingPage-logout-icon-hide',
         }
-        this.logIn = 'fas fa-user fa-2x landingPage-user-icon'; 
-        this.logInHide = 'fas fa-user fa-2x landingPage-user-icon-hide';
-        this.logOut = 'fas fa-sign-out-alt fa-2x landingPage-logout-icon';
-        this.logOutHide = 'fas fa-sign-out-alt fa-2x landingPage-logout-icon-hide';
-        this.account = 'far fa-user fa-2x landingPage-account-icon';
-        this.accountHide = 'far fa-user fa-2x landingPage-logout-icon-hide';
-        this.headerIconLogin = this.logIn;
-        this.headerIconLogout = this.logOutHide;
-        this.headerIconAccount = this.logOutHide;
-        this.ConfirmationShow = 'ConfirmationShow';
-        this.ConfirmationHide = 'ConfirmationHide';
-        this.ConfirmationWindow = this.ConfirmationHide;
-
-        if (this.state.cache !== null){
-            this.headerIconLogin = this.logInHide  
-            this.headerIconLogout = this.logOut   
-            this.headerIconAccount = this.account   
+    }
+    componentDidMount() {  
+        console.log('working?');
+        console.log(this.state.cache);
+        console.log('working?');
+               
+        if (this.state.cache /*|| this.state.cacheGoogle */ == /*'undefined' ||*/ null){
+            this.setState({ logoutIcon: "landingPage-logout-icon-hide" })
+            this.setState({ loginIcon: "fas fa-user fa-2x landingPage-user-icon" })
         } else {
-            this.headerIconLogin = this.logIn   
-            this.headerIconLogout = this.logOutHide   
-            this.headerIconAccount = this.accountHide   
+            this.setState({ logoutIcon: "fas fa-sign-out-alt fa-2x landingPage-logout-icon" })
+            this.setState({ loginIcon: "landingPage-user-icon-hide" })
         }
     }
 
     handleLogOut = (event) => {
         window.localStorage.removeItem('cacheToken');
-        this.setState({cache: null })    
+        window.localStorage.removeItem('cacheTokenGogle');
+        this.setState({
+            cache: null,
+            cacheGoogle: null
+         })    
         this.ConfirmationWindow = this.ConfirmationShow;
         this.headerIconLogin = this.logIn  
         this.headerIconLogout = this.logOut
@@ -47,24 +45,19 @@ class LandingMenu extends Component {
     handleDropDown = () => {
         this.setState({ dropdownOpen: !this.state.dropdownOpen})
     }
-
-    
-    
     render (){
-        
         return(
-            <div className="header">
+            <div className="header-landing">
                 <div className="backHeader-left">
                     <Link to='/LoginPage'> 
-                        <span className={this.headerIconLogin}></span>
+                        <span className={this.state.loginIcon}></span>
                     </Link>
 
                     <Link to='/LogOutConfirmation'>
-                        <button onClick={this.handleLogOut} className={this.headerIconLogout}></button>
+                        <button onClick={this.handleLogOut} className={this.state.logoutIcon}></button>
                     </Link>
                 </div>
                 
-
                 <div className="backHeader-right">  
                     <div className="header-menu">                            
                         <ButtonDropdown className="menu-dropdown" isOpen={this.state.dropdownOpen} toggle={this.handleDropDown} >

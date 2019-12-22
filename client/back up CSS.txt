@@ -35,20 +35,7 @@ code {
   height: 300px;
   margin: 10px 15px;
 }
-.spinner-div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 666px;
-}
-.spinner-icon{
-    width: 6.5rem !important;
-    height: 6.5rem !important;
-}
-.spinner-hearts{
-    width: 1.5rem !important;
-    height: 1.5rem !important;
-}
+
 img{
   width: 100%;
 }
@@ -166,7 +153,7 @@ img{
   width: 10%
 }
 .landing-Page-arrow-pic-div{
-  margin-top: 325px;
+  margin-top: 347px;
 }
 .goToCities{
   color: black;
@@ -201,22 +188,20 @@ img{
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  color: black;
-  font-size: 25px;
-  /* border: solid; */
-  width: 164px;
+
 }
 .slide-city-name-background{
-  width: 138px;
+  width: 25px;
   color: white;
   font-size: 25px;
-  background-color: #f8f9fa;
+  background-color: lightslategray;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 29px;
-  opacity: 0.7;
+  width: 90px;
+  height: 40px;
+  opacity: 0.5;
 }
 .slide-pic-div{
   /* border: solid 1px; */
@@ -276,14 +261,6 @@ transition: opacity 1000ms ease-in;
   border: solid 1px;
   border-radius: 4px;
   opacity: 0.5;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
-.search-icon-filter{
-  font-size: 1.7rem !important;
-  margin-right: 10px;
 }
 
 .cityLi{
@@ -296,22 +273,19 @@ transition: opacity 1000ms ease-in;
 }
 .cities-list-ul{
   overflow-y: scroll;
-  height: 542px;
+  height: 512px;
   margin-bottom: 0px !important;
 }
 .cityListBtn{
   width: 97%;
   height: 50px;
   margin: 5px 5px;
-  background-color: #deecff !important;
 }
 
 .citiesList-main{
-  /* margin-top: 25px; */
+  margin-top: 25px;
 }
-.city-page-photo-div{
-    height: 150px;
-}
+
 .city-page-photo{
   height: 150px;
   background-repeat: no-repeat;
@@ -323,26 +297,9 @@ transition: opacity 1000ms ease-in;
   filter: brightness(120%);
   margin-bottom: 10px;
 }
-.city-page-photo-overlay{
-    height: 150px;
-    position: relative;
-    top: -160px;
-    background-color: white;
-    opacity: 0.4;
-}
-.city-page-name-div{
-    position: relative;
-    top: -310px;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .city-page-name{
- font-weight: 400;
- font-size: 65px;
- letter-spacing: 4px;
- margin-bottom: 25px;
+ font-weight: 700;
+ font-size: 60px;
 }
 .itinerary{
   /* height: 600px !important;
@@ -458,13 +415,20 @@ transition: opacity 1000ms ease-in;
 .arrow-down-div{
   display: flex;
 }
-
+.slide-1-1{
+  background-image: url("");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 10px 87px;
+  width: 80% !important;
+  height: 130px;
+  box-shadow: 12px 9px 24px -8px #595f64 !important;
+}
 .activity-show{
-    border-top: solid 0.5px #00000094;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 .activity-hide{
   display: none !important;
@@ -474,48 +438,7 @@ transition: opacity 1000ms ease-in;
   font-size: 18px;
   font-weight: 600;
 }
-.activity-slider-each{
-    background-image: url("");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: solid 0.5px #00000085;
-    margin: 10px 87px;
-    width: 65% !important;
-    height: 130px;
-    box-shadow: 12px 9px 24px -8px #595f64 !important;
-  }
-.activity-slider-div{
-    width: 120% !important;
-    margin: 0px -100px;
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.activity-slider-title{
-    /* border: solid; */
-    display: flex;
-    width: 65%;
-    flex-direction: column;
-    align-items: end;
-    justify-content: space-evenly;
-    height: 61px;
-    margin-top: 10px;
 
-}
-.activity-slider-div-p{
-    margin: 0px;
-    font-size: 17px;
-    font-weight: 500;
-}
-.activity-slider-div-p-duration{
-    margin: 0px;
-    background-color: white;
-    width: 100%;
-    font-size: 16px;
-    font-weight: 700;
-}
 .loginButtonSubmit{
   width: 50%;
   margin-bottom: 30px;
@@ -594,7 +517,6 @@ transition: opacity 1000ms ease-in;
 .landingPage-user-icon{
   margin: 6px 15px;
   color: black;
-  margin-left: 15px;
 }
 .landingPage-user-icon-hide{
   display: none;
@@ -614,9 +536,6 @@ transition: opacity 1000ms ease-in;
 }
 .landingPage-logout-icon-hide{
   display: none;
-}
-.landing-page-button{
-  /* background-color: blue !important; */
 }
 .creatNewForm-div{
   display: flex;
@@ -892,57 +811,31 @@ transition: opacity 1000ms ease-in;
 }
 .editClass{
     width: 100%;
-    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 165px ;
+    top: 250px ;
 }
 .editClass-hide{
     display: none;
 }
-.edit-button-x-icon{
-    font-size: 1.5em !important;
-    border: none !important;
-    color: white;
-  }
 .commentUpdateDiv{
     border: solid;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    width: 70%;
-    height: 100%;
+    justify-content: center;
+    width: 65%;
+    height: 110px;
     background-color: white;
-}
-.edit-button-x{
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    border: none !important;
-}
-.editCommentX-div{
-    width: 100%;
+
 }
 .commentUpdate-title{
-    font-size: 21px;
-    font-weight: 500;
-    margin: 0px 0px 5px 0px;
-}
-.innerCommentView{
-    font-size: 19px;
-    font-weight: 600;
-    margin: 0px;
+
 }
 .commentUpdate-input{
-    width: 80% !important;
-    margin-bottom: 15px;
-}
-.edit-commentSend{
-    margin-bottom: 15px;
-    background-color: paleturquoise !important;
+
 }
 .menu-dropdown{
   background-color: white !important;

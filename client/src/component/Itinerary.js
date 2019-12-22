@@ -60,7 +60,6 @@ class Itinerary extends Component {
                                 <div className="itinerary-info-title">
                                     {itinerary.title}
                                     <Favorites itinerary={itinerary}/>
-                                    {/* <span onClick={this.handleClick} className={this.state.HeartState}></span> */}
                                 </div>
                                 <div className="itinerary-info-likes">
                                     <div><span className="far fa-star"></span>{itinerary.rating}</div>
@@ -75,11 +74,11 @@ class Itinerary extends Component {
                         </div>
 
                         <div className="activity">
-                            <Activity />        
+                            <Activity itinerary={itinerary} />        
                         </div>
 
                         <div className={this.commentsShowOrHide}>
-                            <Comments/>
+                            <Comments itinerary={itinerary}/>
                         </div>
 
                     </div>)}

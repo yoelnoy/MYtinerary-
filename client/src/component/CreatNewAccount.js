@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LoginHeaderMenu from './LoginHeaderMenu'
-import { Button } from 'reactstrap';
 import Select from 'react-select';
 import axios from 'axios';
 
@@ -71,7 +70,7 @@ class CreatNewAccount extends Component {
             lastName: this.state.lastName,
             country: this.state.country
         }
-        if(!this.state.checkbox == true){
+        if(!this.state.checkbox === true){
             alert('Please agree to our Terms & Conditions') 
             console.log(this.state.country);
             
@@ -82,13 +81,13 @@ class CreatNewAccount extends Component {
             })
             .catch(err => {
                 let resErrors = err.response.data.errors
-                for(let i = 0; i < resErrors.length ; i++) {
-                    if(resErrors[i].param == 'email'){
-                        alert('Invalid Email. Please make sure you got it right')
-                    } else if (resErrors[i].param == 'password'){
-                        alert('Invalid Password. Please make sure you got it right')
-                    }
-                } 
+                // for(let i = 0; i < resErrors.length ; i++) {
+                //     if(resErrors[i].param == 'email'){
+                //         alert('Invalid Email. Please make sure you got it right')
+                //     } else if (resErrors[i].param == 'password'){
+                //         alert('Invalid Password. Please make sure you got it right')
+                //     }
+                // } 
             })
         }
         
@@ -142,7 +141,7 @@ class CreatNewAccount extends Component {
                                 <input type="checkbox" onChange={this.handleChecked} checked={this.state.checkbox} className="form-check-input" id="exampleCheck1" />
                                 <label className="form-check-label termsText" htmlFor="exampleCheck1">
                                     I agree to MYtinerary's 
-                                    <a className="termsTextLink" href="#"> Terms & Conditions</a>
+                                    <a className="termsTextLink" href=""> Terms & Conditions</a>
                                 </label>
                             </div>
 

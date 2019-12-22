@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { connect } from 'react-redux';
 import { getCities } from '../store/actions/cityAction'
 import uuid from 'uuid/v4';
+import { Link } from 'react-router-dom';
 
 class SimpleSlider extends Component {
 
@@ -34,14 +35,36 @@ class SimpleSlider extends Component {
           <div key={uuid()}>
             <div className="slide-main">
               <div className="slide-div-top">
-                <div className="slide-pic-div"><h4 className="slide-city-name">{thisElement.name}</h4><div className="slide-city-name-background"></div><img src={thisElement.img} alt="1" className="slide-pic-div-img"/></div>
-                <div className="slide-pic-div"><h4 className="slide-city-name">{nextElement.name}</h4><div className="slide-city-name-background"></div><img src={nextElement.img} alt="1" className="slide-pic-div-img"/></div>
+
+               <div className="slide-pic-div">
+                <Link to={`/ChosenCity/${thisElement.name}`}><p className="slide-city-name">{thisElement.name}</p></Link>
+                <div className="slide-city-name-background"></div>
+                <img src={thisElement.img} alt="1" className="slide-pic-div-img"/>
               </div>
 
-              <div className="slide-div-bottom">
-                <div className="slide-pic-div"><h4 className="slide-city-name">{twoNextElement.name}</h4><div className="slide-city-name-background"></div><img src={twoNextElement.img} alt="1" className="slide-pic-div-img"/></div>
-                <div className="slide-pic-div"><h4 className="slide-city-name">{threeNextElement.name}</h4><div className="slide-city-name-background"></div><img src={threeNextElement.img} alt="1" className="slide-pic-div-img"/></div>
+              <div className="slide-pic-div">
+                <Link to={`/ChosenCity/${nextElement.name}`}><p className="slide-city-name">{nextElement.name}</p></Link>
+                <div className="slide-city-name-background"></div>
+                <img src={nextElement.img} alt="1" className="slide-pic-div-img"/>
               </div>
+
+            </div>
+
+            <div className="slide-div-bottom">
+              
+              <div className="slide-pic-div">
+                <Link to={`/ChosenCity/${twoNextElement.name}`}><p className="slide-city-name">{twoNextElement.name}</p></Link>
+                <div className="slide-city-name-background"></div>
+                <img src={twoNextElement.img} alt="1" className="slide-pic-div-img"/>
+              </div>
+
+              <div className="slide-pic-div">
+                <Link to={`/ChosenCity/${threeNextElement.name}`}><p className="slide-city-name">{threeNextElement.name}</p></Link>
+                <div className="slide-city-name-background"></div>
+                <img src={threeNextElement.img} alt="1" className="slide-pic-div-img"/>
+              </div>
+
+            </div>
             </div>
           </div>
       )

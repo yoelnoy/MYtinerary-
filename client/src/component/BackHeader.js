@@ -8,7 +8,9 @@ class BackHeader extends Component {
         super ()
         this.state = {
             userOptions: false,
-            dropdownOpen: false
+            dropdownOpen: false,
+            cache: window.localStorage.getItem('cacheToken'),
+            cacheGoogle: window.localStorage.getItem('cacheTokenGogle')
         }
     }
     handleClick = () => {
@@ -20,6 +22,20 @@ class BackHeader extends Component {
     }
     
     render (){
+        let ifLoggedIn;
+        let ifLoggedInFavorites;
+        if (this.state.cache || this.state.cacheGoogle !== 'undefined' || null){ 
+            ifLoggedIn = '/LogOutConfirmation'
+            ifLoggedInFavorites = '/MyFavorites'
+        }else {
+            ifLoggedIn = '/LoginPage'
+            ifLoggedInFavorites = '/LoginPage'
+        }
+        console.log('Cache');
+        console.log(this.state.cache);
+        console.log('Cache Google');
+        console.log(this.state.cacheGoogle);
+        console.log(ifLoggedIn);
         
         return(
             <div className="header">
@@ -31,11 +47,11 @@ class BackHeader extends Component {
                 
 
                 <div className="backHeader-right">
-                    
-                    <div className="header-user">
-                        <span className="fas fa-user fa-2x header-user-icon"></span>
-                    </div>
-
+                    <Link to='/LoginPage'>
+                        <div className="header-user">
+                            <span className="fas fa-user fa-2x header-user-icon"></span>
+                        </div>
+                    </Link>
                     
                     <div className="header-menu">                            
                         <ButtonDropdown className="menu-dropdown" isOpen={this.state.dropdownOpen} toggle={this.handleDropDown} >
@@ -45,8 +61,8 @@ class BackHeader extends Component {
                             <DropdownMenu right className="menu-dropdown-toggled">
                                 <Link to='/LandingPage'><DropdownItem>Home</DropdownItem></Link>
                                 <Link to='/Cities'><DropdownItem>Cities</DropdownItem></Link>
-                                <Link to='/MyFavorites'><DropdownItem>Favorites</DropdownItem></Link>
-                                <Link to='/LogOutConfirmation'><DropdownItem>Logout</DropdownItem></Link>
+                                <Link to={ifLoggedInFavorites}><DropdownItem>Favorites</DropdownItem></Link>
+                                <Link to= {ifLoggedIn}/*{ `/${ifLoggedIn}`}*/><DropdownItem>Logout</DropdownItem></Link>
 
                             </DropdownMenu>
                         </ButtonDropdown>

@@ -7,24 +7,14 @@ import { chooseACity } from '../store/actions/itineraryActions'
 import Itinerary from './Itinerary';
 
 class ChosenCity extends Component {
-    // constructor() {
-    //     super()
-    //     this.state = {
-    //         id:this.props.match.params.id,
-    //         getCities: this.props.getCities (id),
-    //         chooseACity:this.props.chooseACity(id)
-    //     }
-    // }
     componentDidMount(){
         let id = this.props.match.params.id;
         this.props.getCities (id)
         this.props.chooseACity(id)        
     }
-
     render () {
         let cityId = this.props.match.params.id;
-        let cityImg = this.props.cities
-
+        let cityList = this.props.cities
         function myCity (array) {
             let chosenPhoto = [];
             for(let i = 0 ; i < array.length ; i++){
@@ -34,22 +24,27 @@ class ChosenCity extends Component {
             }
             return chosenPhoto;
         }
-        let cityPhoto = myCity(cityImg)
+        let cityFinal = myCity(cityList)
         return (
             <div className="page">
                 <BackHeader />
 
-                {cityPhoto.map((city) =>
+                {cityFinal.map((city) =>
+                <div className="city-page-photo-div">
                     <div key={uuid()} className="city-page-photo"
-                style={{backgroundImage:`url(${city.img})`}}>
-                 <h1 className="city-page-name">{city.name}</h1>
+                        style={{backgroundImage:`url(${city.img})`}}>
+                    </div>
+                    <div className="city-page-photo-overlay"></div>
+                    <div className="city-page-name-div">
+                        <h1 className="city-page-name">{city.name}</h1>
+                    </div>
                 </div>
                 )}
 
-                <div>
-                    <h2>MYtineraries:</h2>
+                <div className="itineraries-list">
+                    <Itinerary />
                 </div>
-                <Itinerary />
+                
 
             </div>
         )

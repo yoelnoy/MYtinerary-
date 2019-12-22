@@ -10,7 +10,12 @@ import LogOutConfirmation from './component/LogOutConfirmation';
 import MyFavorites from './component/MyFavorites';
 
 class App extends Component {
-  
+  componentDidMount() {
+    // if(this.props.match.params.id){
+    //   let id = this.props.match.params.id;
+    // window.localStorage.setItem('cacheTokenGogle', id)
+    // }
+  }
  render (){
 
    return (
@@ -18,7 +23,8 @@ class App extends Component {
     <BrowserRouter>
       <div className="App">
       
-      <Route path='/LandingPage' component={ LandingPage } /> 
+      <Route exact path='/LandingPage' component={ LandingPage } /> 
+      <Route path='/LandingPage/:id' component={ LandingPage } /> 
       <Route exact path='/LoginPage' component={ LoginPage } />  
       <Route exact path='/LogOutConfirmation' component={ LogOutConfirmation } />  
       <Route exact path='/CreatNewAccount' component={ CreatNewAccount } /> 

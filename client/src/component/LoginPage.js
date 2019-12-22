@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import LoginHeaderMenu from './LoginHeaderMenu'
 import { Button, Form } from 'reactstrap';
-import Select from 'react-select';
 import axios from 'axios';
 
 
@@ -15,26 +14,20 @@ class LoginPage extends Component {
             password: 'Password',
             userId: '',
             cache: window.localStorage.getItem('cacheToken'),
-            logOutClass: 'logout-hide'
-            // logoutHide: 'logout-hide',
-            // logoutShow: 'logout-show',
-
+            logOutClass: 'logout-hide',
         }
+        this.inputRef = React.createRef();
         this.handleChange_email = this.handleChange_email.bind(this);
         this.handleChange_password = this.handleChange_password.bind(this);
     }
     componentDidMount() {
-        let newUser = this.state;
+        this.inputRef.current.focus();  
 
         if(this.state.cache !== null){
             this.setState({ logOutClass: 'logout-Show'})
         } else {
             this.setState({ logOutClass: 'logout-hide'})
         }
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
     }
 
     handleChange_email = (event) => {
@@ -52,6 +45,7 @@ class LoginPage extends Component {
                 this.setState({ userId: res.data.user.id})
                 window.localStorage.setItem('cacheToken', res.data.token);
                 window.localStorage.setItem('userId', res.data.user.id);
+                window.localStorage.setItem('userUsername', res.data.user.username);
                 window.location.href = 'http://localhost:3000/LandingPage';
             })
             .catch(err => {
@@ -72,7 +66,7 @@ class LoginPage extends Component {
                 <Form className="loginForm" inline>
                 <h1 className="loginPageTItle">Login</h1>
                         <div className="loginUpperDiv">
-                            <input className="textareaForm" type="text" name="email" placeholder={this.state.email}  
+                            <input className="textareaForm" ref={this.inputRef} type="text" name="email" placeholder={this.state.email}  
                             onChange={this.handleChange_email}></input>  
                         
                             <input className="textareaForm" type="text" name="password" placeholder={this.state.password}  

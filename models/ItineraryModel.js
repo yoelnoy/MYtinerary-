@@ -40,6 +40,12 @@ const ItinerarySchema = new Schema({
     },
     img: {
         type: String
+    },
+    comments: {
+        type:Array
+    },
+    activities: {
+        type:Array
     }
 });
 
