@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CitiesList from './citiesList';
+import CitiesList from './CitiesList';
 
 
 
