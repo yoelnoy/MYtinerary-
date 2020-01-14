@@ -9,7 +9,6 @@ const Keys = require ('config');
 const passport = require ('passport');
 const path = require ('path')
 
-
 const app = Express();
 
 app.use(Express.json());
@@ -23,10 +22,8 @@ app.use(passport.initialize());
 require("./passport");
 require("./passportGoogle");
 
-
 // Set up view engine 
 app.set('view engine', 'ejs'); 
-
 
 //set up routes 
 app.use('/api/auth', auth)
@@ -35,8 +32,6 @@ app.use('/api/auth', auth)
 app.get('/LandingPage', (req,res) => {
     res.render('App');
 })
-
-
 
 /////////////////////////////////
 
@@ -48,15 +43,12 @@ mongoose
     .then (() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
-    
-
-
     app.use('/api/cities', items)
     app.use('/api/itineraries', itinerary)
     app.use('/api/activities', activity)
     app.use('/api/users', users)
     
-// Server our static assets if we're in production
+// Server our static assets if we're in production - for Heroku
 if(process.env.NODE === 'production'){
     //set static folder
     app.use(express.static('client/build'));

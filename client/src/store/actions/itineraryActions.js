@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// Actions made in redux for the Itinerary component
 export const chooseACity = (id) => dispatch => {
     axios.get (`/api/itineraries/${id}`)
     .then(res => {   

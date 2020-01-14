@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //creat user schema and model
-
 const AuthSchema = new Schema({
 
     username: String,
@@ -10,7 +9,5 @@ const AuthSchema = new Schema({
     img: String
 
 });
-
-
 
 module.exports = Auth = mongoose.model('googleUser', AuthSchema);

@@ -18,15 +18,8 @@ router.get('/:city',
 			.then(city => {
 				res.send(city)
 			})
-			.catch(err => console.log(err));
+			.catch(err => 'Error');
 });
-/*router.get('/:id',
-	(req, res) => {
-			.then(city => {
-				res.send(city)
-			})
-			.catch(err => console.log(err));
-});*/
 
 //@rout POST api/items img
 //@dsc POST All Items
@@ -80,6 +73,7 @@ router.put('/:id', (req, res) => {
     })   
 });
 
+// Deleting specific comments according to the comment's id sent from fron end to back end
 router.put('/delete/:id', (req, res) => {
     let commentToDelete = req.body;
     let commentToDeleteBody = req.body.commentBody;
@@ -89,14 +83,6 @@ router.put('/delete/:id', (req, res) => {
     let commentsIds = [];
     let indexToDelete = '';
 
-    console.log('commentToDelete');
-    console.log(commentToDelete);
-    console.log('commentToDeleteBody');
-    console.log(commentToDeleteBody);
-    console.log('commentToDeleteId');
-    console.log(commentToDeleteId);
-    
-
     Itinerary.findById({_id:req.params.id}).then(function(itineraryObjectFromDB){
         itineraryObject = itineraryObjectFromDB;
         existingComments = itineraryObjectFromDB.comments;
@@ -104,16 +90,10 @@ router.put('/delete/:id', (req, res) => {
             commentsIds.push(existingComments[i].id)
             indexToDelete = commentsIds.indexOf( commentToDeleteId )
         }
-        console.log('existingComments');
-        console.log(existingComments);
-        console.log('indexToDelete');
-        console.log(indexToDelete);
         existingComments.splice(indexToDelete, 1);
         
         itineraryObject.comments = existingComments
-        console.log('existingComments');
-        console.log(existingComments);
-        
+
         Itinerary.findByIdAndUpdate({_id:req.params.id}, itineraryObject)
         .then(function(){
             Itinerary.findOne({_id:req.params.id}).then(function(itinerary){
@@ -122,6 +102,8 @@ router.put('/delete/:id', (req, res) => {
         })
     })   
 });
+
+// Editing specific comments according to the comment's id sent from fron end to back end
 router.put('/edit/:id', (req, res) => {
     let fullEditedComment = req.body
     let editedComment = req.body.comment;
@@ -134,23 +116,10 @@ router.put('/edit/:id', (req, res) => {
     Itinerary.findById({_id:req.params.id}).then(function(itineraryObjectFromDB){
         itineraryObject = itineraryObjectFromDB;
         existingComments = itineraryObjectFromDB.comments;
-        console.log('fullEditedComment');
-        console.log(fullEditedComment);
-        console.log('editedComment');
-        console.log(editedComment);
-        console.log('selectedCommentId');
-        console.log(selectedCommentId);
-        console.log('existingComments');
-        console.log(existingComments);
-        
         for(let i = 0 ; i < existingComments.length ; i++){
             commentsIds.push(existingComments[i].id)
             indexToEdit = commentsIds.indexOf( selectedCommentId )
         }
-        console.log('indexToEdit');
-        console.log(indexToEdit);
-        
-
         existingComments.splice(indexToEdit, 1, fullEditedComment);
         itineraryObject.comments = existingComments
         Itinerary.findByIdAndUpdate({_id:req.params.id}, itineraryObject)

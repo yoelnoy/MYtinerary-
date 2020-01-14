@@ -13,29 +13,26 @@ class BackHeader extends Component {
             cacheGoogle: window.localStorage.getItem('cacheTokenGogle')
         }
     }
+    //function for saving last page path to cache for returning to last page
     handleClick = () => {
-        //alert(window.history.length)
         window.history.back()
     }
+    //toggeling dropdown (on/off)
     handleDropDown = () => {
         this.setState({ dropdownOpen: !this.state.dropdownOpen})
     }
     
     render (){
+        //controling redirecting routs acording to wether the user is logged in or not
         let ifLoggedIn;
         let ifLoggedInFavorites;
-        if (this.state.cache || this.state.cacheGoogle !== 'undefined' || null){ 
+        if (this.state.cache || this.state.cacheGoogle !== null){ 
             ifLoggedIn = '/LogOutConfirmation'
             ifLoggedInFavorites = '/MyFavorites'
         }else {
             ifLoggedIn = '/LoginPage'
             ifLoggedInFavorites = '/LoginPage'
         }
-        console.log('Cache');
-        console.log(this.state.cache);
-        console.log('Cache Google');
-        console.log(this.state.cacheGoogle);
-        console.log(ifLoggedIn);
         
         return(
             <div className="header">
@@ -45,7 +42,6 @@ class BackHeader extends Component {
                     </div>
                 </div>
                 
-
                 <div className="backHeader-right">
                     <Link to='/LoginPage'>
                         <div className="header-user">
@@ -63,7 +59,6 @@ class BackHeader extends Component {
                                 <Link to='/Cities'><DropdownItem>Cities</DropdownItem></Link>
                                 <Link to={ifLoggedInFavorites}><DropdownItem>Favorites</DropdownItem></Link>
                                 <Link to= {ifLoggedIn}/*{ `/${ifLoggedIn}`}*/><DropdownItem>Logout</DropdownItem></Link>
-
                             </DropdownMenu>
                         </ButtonDropdown>
                     </div>        

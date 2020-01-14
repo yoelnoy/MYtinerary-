@@ -1,3 +1,5 @@
+//Indicating the Reducer how to update the state in case the actions mentions below are called inside the components
+
 const initState = {
     cities:[]
 }
@@ -8,12 +10,6 @@ const citiesReducer = (state = initState, action) => {
                 ...state,
                 cities: action.payload
             } 
-            
-        case ('TESTING'):
-            return {
-                ...state,
-                cities: action.payload
-            }
 
             default:
                 return state;

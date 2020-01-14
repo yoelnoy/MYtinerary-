@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-
+// Actions made in redux for the Activity component
 export const getActivities = () => dispatch => {
     axios.get ('/api/activities')
     .then(res => {   
@@ -21,4 +21,3 @@ export const getCitiesActivity = (id) => dispatch => {
                    
     })
 }
-// ${}

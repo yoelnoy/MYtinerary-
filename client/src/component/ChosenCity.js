@@ -6,6 +6,7 @@ import { getCities } from '../store/actions/cityAction'
 import { chooseACity } from '../store/actions/itineraryActions'
 import Itinerary from './Itinerary';
 
+//this component is the page of the city chosen by the user. This component contains all the information and other components about the city.
 class ChosenCity extends Component {
     componentDidMount(){
         let id = this.props.match.params.id;
@@ -28,7 +29,6 @@ class ChosenCity extends Component {
         return (
             <div className="page">
                 <BackHeader />
-
                 {cityFinal.map((city) =>
                 <div className="city-page-photo-div">
                     <div key={uuid()} className="city-page-photo"
@@ -40,17 +40,15 @@ class ChosenCity extends Component {
                     </div>
                 </div>
                 )}
-
                 <div className="itineraries-list">
                     <Itinerary />
                 </div>
-                
-
             </div>
         )
     }
 }
 
+//Maping theses arrays to props in order to use them inside the app throug Redux
 const mapStateToProps = (state) => {
     return {
         itineraries: state.itineraries.itineraries,

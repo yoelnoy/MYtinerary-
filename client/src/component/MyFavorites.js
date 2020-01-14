@@ -5,7 +5,7 @@ import Activity from './Activity';
 import Comments from './Comments';
 import uuid from 'uuid/v4';
 
-
+// My favorites page, containig all previously saved favorites of the user
 class MyFavorites extends Component {
     constructor () {
         super()
@@ -20,50 +20,43 @@ class MyFavorites extends Component {
             spinner: true
         }
 
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
         this.favoritesShow = 'favorites-component-show';
         this.favoritesHide = 'favorites-component-hide';
         this.favoritesShowOrHide = '';
     }    
     componentDidMount() {
-        axios.get('/api/users')
-        .then(res => {
-            this.setState({ favorites: res.data[0].favorites});
-            axios.get('/api/itineraries')
+        // If user is logged in -> retrieve all users, compare userId to all userIDs and retrieve favorites of the logged in user
+        if(this.state.userId !== null){
+            axios.get('/api/users')
             .then(res => {
-                this.setState({ 
-                    itineraries: res.data,
-                    spinner: false
-                });
+                let resArray = res.data;                
+                for (let i = 0 ; i < resArray.length ; i++){
+                    if(resArray[i]._id === this.state.userId){
+                        this.setState({ favorites: resArray[i].favorites});
+                        axios.get('/api/itineraries')
+                        .then(res => {
+                            this.setState({ 
+                                itineraries: res.data,
+                                spinner: false
+                            });
 
-                for(let i = 0 ; i < this.state.itineraries.length ; i++){
-                    for(let f = 0 ; f < this.state.favorites.length; f++){
-                        if(this.state.itineraries[i]._id === this.state.favorites[f] /*&& itineraryId == this.state.favorites[f]*/){
-                            this.setState({ myFavorites: [ ... this.state.myFavorites, this.state.itineraries[i]] });
-                        }
+                            for(let i = 0 ; i < this.state.itineraries.length ; i++){
+                                for(let f = 0 ; f < this.state.favorites.length; f++){
+                                    if(this.state.itineraries[i]._id === this.state.favorites[f] /*&& itineraryId == this.state.favorites[f]*/){
+                                        this.setState({ myFavorites: [ ... this.state.myFavorites, this.state.itineraries[i]] });
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
             });
-        });
-    }
-    handleClick = () => {
-        let itineraryId = this.props.itinerary._id
-        this.setState({ heart: !this.state.heart })
-        if (this.state.heart === false){
-            this.setState({HeartState: 'far fa-heart favorite-empty'}); 
-        } else {
-            this.setState({HeartState: 'fas fa-heart favorite-full'}); 
-        }  
-        axios.put('/api/users/' + this.state.userId, {
-            favorites: itineraryId
-        }).then (res => {
-            console.log(res);
-        }).catch (err => {
-            console.log(err);
-        })  
+        }
     }
     
     render () {
+        // All html is writen as a function in order to incorporate spinner/loader and keep the Html clean
         let favoritesArray = this.state.myFavorites
         let data;
         if (this.state.spinner){
@@ -82,7 +75,6 @@ class MyFavorites extends Component {
                 {favoritesArray.map((itinerary) => 
                     <div key={uuid()} className="itinerary">
                         <div className="itinerary-upper-photo" style={{backgroundImage:`url(${itinerary.img})`}}>
-                        {/* <img className="itinerary-upper-photo-pic" src={itinerary.img} alt="City Photo"/> */}
                         </div>
                         <div className="itinerary-top">
                             <div className="itinerary-user">
@@ -93,8 +85,6 @@ class MyFavorites extends Component {
                             <div className="itinerary-info">
                                 <div className="itinerary-info-title">
                                     {itinerary.title}
-                                    {/* <Favorites onClick={this.handleClick} itinerary={itinerary}/> */}
-                                    {/* <span onClick={this.handleClick} className={this.state.HeartState}></span> */}
                                 </div>
                                 <div className="itinerary-info-likes">
                                     <div><span className="far fa-star"></span>{itinerary.rating}</div>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import SimpleSlider from './SlideTest';
-import LandingMenu from './/LandingMenu';
+import CitiesSlider from './CitiesSlider';
+import LandingMenu from './LandingMenu';
 import { Link } from 'react-router-dom';
 
+//Landing page (main page) of the App
 class LandingPage extends Component {
     constructor() {
         super()
@@ -10,27 +11,9 @@ class LandingPage extends Component {
             cacheGoogle: window.localStorage.getItem('cacheTokenGoogle'),
             cache: window.localStorage.getItem('cacheToken'),
             userId: window.localStorage.getItem('userId'),
-            // loginIcon: 'landingPage-user-icon-hide',
-            // logoutIcon: 'landingPage-logout-icon-hide',
         }
     }
-
-    componentDidMount(){
-        // console.log(this.state.cache);
-        
-        // if (this.state.cache || this.state.cacheGoogle == 'undefined' || null){
-        //     console.log('IN-11');
-        //     this.setState({ logoutIcon: "landingPage-logout-icon-hide" })
-        //     this.setState({ loginIcon: "fas fa-user fa-2x landingPage-user-icon" })
-        //     console.log(this.state.logoutIcon);
-        //     console.log(this.state.loginIcon);
-        // } else {
-        //     console.log('IN-22');
-        //     this.setState({ logoutIcon: "fas fa-sign-out-alt fa-2x landingPage-logout-icon" })
-        //     this.setState({ loginIcon: "landingPage-user-icon-hide" })
-        // }
-    }
-
+    //Removing user's token from cache upos logging out
     handleLogOut = (event) => {
         window.localStorage.removeItem('cacheToken');
         this.setState({cache: null })    
@@ -43,19 +26,17 @@ class LandingPage extends Component {
         return (
             <div>
                 <div className="landingPageNew">
+                    {/* passing the state as props to the LandingMenu component in order to toggle login/logout icon */}
                     <LandingMenu LandingPage={this.state} />
                     <div>
                         <div className="landing-Page-arrow-pic-div">
                             <Link to="/Cities" className="landing-Page-arrow-icon">
                                 <button className="goToCities btn waves-effect waves-white landing-page-button">ENTER</button>
                             </Link>
-
-                            <SimpleSlider />
-
+                            <CitiesSlider />
                         </div>
                     </div>
                 </div>
-
             </div>
         )
     }

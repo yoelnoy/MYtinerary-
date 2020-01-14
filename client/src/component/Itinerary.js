@@ -6,7 +6,7 @@ import Activity from './Activity';
 import Comments from './Comments';
 import Favorites from './Favorites';
 
-
+//Itinerary component containg: info for each itinerary, favorites, activities and comments
 class Itinerary extends Component {
     constructor() {
         super()
@@ -18,19 +18,17 @@ class Itinerary extends Component {
         this.commentsShow = 'comment-component-show';
         this.commentsHide = 'comment-component-hide';
         this.commentsShowOrHide = '';
-        // this.handleClick = this.handleClick.bind(this);
 
+        //If user is not logged in, comment section is hidden
         if(this.state.cache == null){
             this.commentsShowOrHide = this.commentsHide
         } else if (this.state.cache !==null){
             this.commentsShowOrHide = this.commentsShow
         }
-        console.log(this.state.cache);
-        console.log(this.commentsShowOrHide);
-        
     }
 
     render (){
+        //Showing differenr $$$ sing according to the price indicated in the itinerary
         let id = this.props.itineraries 
         function PriceRange (a) {
             let visualPrice = '';
@@ -45,10 +43,10 @@ class Itinerary extends Component {
         }
         return (
             <div>
+                {/* iterating the Itinerary array and printing info to the html */}
                 {id.map((itinerary) => 
                     <div key={uuid()} className="itinerary">
                         <div className="itinerary-upper-photo" style={{backgroundImage:`url(${itinerary.img})`}}>
-                        {/* <img className="itinerary-upper-photo-pic" src={itinerary.img} alt="City Photo"/> */}
                         </div>
                         <div className="itinerary-top">
                             <div className="itinerary-user">
@@ -80,15 +78,14 @@ class Itinerary extends Component {
                         <div className={this.commentsShowOrHide}>
                             <Comments itinerary={itinerary}/>
                         </div>
-
                     </div>)}
-
-                </div>
+            </div>
         )
     }
 
 }
 
+//Maping theses arrays to props in order to use them inside the app throug Redux
 const mapStateToProps = (state) => {
     return {
         itineraries: state.itineraries.itineraries,
@@ -98,7 +95,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getCities: (id) => dispatch (getCities(id)),
-        // chooseACity: (id) => dispatch ( chooseACity(id))
     }
 } 
 export default connect(mapStateToProps, mapDispatchToProps) (Itinerary);

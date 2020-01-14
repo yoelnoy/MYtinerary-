@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
+//The opption to click the favorite heart and save an itinerary to your Favorites page
 class Favorites extends Component {
     constructor() {
         super()
@@ -19,38 +19,43 @@ class Favorites extends Component {
         this.favoritesHide = 'favorites-component-hide';
         this.favoritesShowOrHide = '';
 
+        //Hiding/showing the favorite icon according to whether the user is logged in or not
         if(this.state.cache == null){
             this.favoritesShowOrHide = this.favoritesHide
         } else if (this.state.cache !==null){
             this.favoritesShowOrHide = this.favoritesShow
         }     
     }
-    componentDidMount(){
-        let itineraryId = this.props.itinerary._id
 
+    componentDidMount(){
+        //If the user is logged in the favorites from his account are imported. Saved favorites will appear as full red heart
+        let itineraryId = this.props.itinerary._id
         axios.get('/api/users')
         .then(res => {
-            this.setState({ favorites: res.data[0].favorites});
-
-            axios.get('/api/itineraries')
-            .then(res => {
-                this.setState({ itineraries: res.data});
-                this.setState({ spinner: false});
-               
-                for(let i = 0 ; i < this.state.itineraries.length ; i++){
-                    for(let f = 0 ; f < this.state.favorites.length; f++){
-                        if((this.state.itineraries[i]._id === this.state.favorites[f]) && itineraryId === this.state.favorites[f]){
-                            this.setState({HeartState: 'fas fa-heart favorite-empty'});
+            let resArray = res.data;                
+            for (let i = 0 ; i < resArray.length ; i++){
+                if(resArray[i]._id === this.state.userId){
+                    this.setState({ favorites: resArray[i].favorites});
+                    axios.get('/api/itineraries')
+                    .then(res => {
+                        this.setState({ itineraries: res.data});
+                        this.setState({ spinner: false});
+                    
+                        for(let i = 0 ; i < this.state.itineraries.length ; i++){
+                            for(let f = 0 ; f < this.state.favorites.length; f++){
+                                if((this.state.itineraries[i]._id === this.state.favorites[f]) && itineraryId === this.state.favorites[f]){
+                                    this.setState({HeartState: 'fas fa-heart favorite-empty'});
+                                }
+                            }
                         }
-                    }
+                    });
                 }
-            });
+            }   
         });        
     }
-
+    //Clicking the heart icon to select itinerary as favorite
     handleClick = () => {
         let itineraryId = this.props.itinerary._id
-        console.log(itineraryId);
         
         this.setState({ heart: !this.state.heart })
 
@@ -61,14 +66,12 @@ class Favorites extends Component {
         }  
         axios.put('/api/users/' + this.state.userId, {
             favorites: itineraryId
-        }).then (res => {
-            console.log(res);
-        }).catch (err => {
-            console.log(err);
-        })  
+        }).then (res => {'Favorite Chosen'})
+        .catch (err => {'Error'})  
     }
     
     render () {
+        //showing a loader until the favoties are retrive from DB
         let data;
         if (this.state.spinner){
             data = 

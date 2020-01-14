@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// Actions made in redux for the CitiesList component
 export const getCities = () => dispatch => {
     axios.get ('/api/cities')
     .then(res => {   
@@ -11,12 +12,6 @@ export const getCities = () => dispatch => {
     })
 }
 
-export const testing = () => {
-    return {
-        type: 'TESTING',
-        payload:  [{name: 'Madrid', country: 'Spain', id: '1'}]
-    }  
-}
 
 
   

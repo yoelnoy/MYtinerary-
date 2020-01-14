@@ -3,6 +3,7 @@ import LoginHeaderMenu from './LoginHeaderMenu'
 import Select from 'react-select';
 import axios from 'axios';
 
+//Creating new account for new users
 class CreatNewAccount extends Component {
     constructor(props) {
         super(props);
@@ -16,8 +17,8 @@ class CreatNewAccount extends Component {
                     checkbox: false,
                     citiesList: [],
                     value: 'choose a city'
-                    
                 }
+        //binding all functions to the data recieved from the user upon filling the Create new user form      
         this.handleChange_username = this.handleChange_username.bind(this);
         this.handleChange_email = this.handleChange_email.bind(this);
         this.handleChange_password = this.handleChange_password.bind(this);
@@ -26,16 +27,16 @@ class CreatNewAccount extends Component {
         this.handleChecked = this.handleChecked.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCountry = this.handleCountry.bind(this);
- 
+        
+        //Acquiring cities from DB
         axios.get('/api/cities')
         .then(res => {
             this.setState({citiesList: res.data})
             })
             .catch(err => {
-                console.log(err); 
             })
     }
-    
+    //Function for updating the state upon change (writing/checkbox/submit) by the user
     handleChange_username(event) {
         this.setState({username: event.target.value});
     }
@@ -58,8 +59,7 @@ class CreatNewAccount extends Component {
         this.setState({country: event.value});
     }
 
-    
-
+    //Submiting new user's data to the DB upon submit
     handleSubmit(event) {
         event.preventDefault();
         let newUser = {
@@ -71,30 +71,26 @@ class CreatNewAccount extends Component {
             country: this.state.country
         }
         if(!this.state.checkbox === true){
-            alert('Please agree to our Terms & Conditions') 
-            console.log(this.state.country);
-            
+            alert('Please agree to our Terms & Conditions')             
         }else{
             axios.post('/api/users', newUser )
             .then(res => {
-                console.log(res);
             })
             .catch(err => {
                 let resErrors = err.response.data.errors
-                // for(let i = 0; i < resErrors.length ; i++) {
-                //     if(resErrors[i].param == 'email'){
-                //         alert('Invalid Email. Please make sure you got it right')
-                //     } else if (resErrors[i].param == 'password'){
-                //         alert('Invalid Password. Please make sure you got it right')
-                //     }
-                // } 
+                for(let i = 0; i < resErrors.length ; i++) {
+                    if(resErrors[i].param == 'email'){
+                        alert('Invalid Email. Please make sure you got it right')
+                    } else if (resErrors[i].param == 'password'){
+                        alert('Invalid Password. Please make sure you got it right')
+                    }
+                } 
             })
+            window.location.href = "http://localhost:3000/LoginPage";
         }
-        
     }
 
     render () {   
-
         let mycitiesList = this.state.citiesList
         const options = mycitiesList.map(v => ({
             label: v.name,
@@ -155,66 +151,3 @@ class CreatNewAccount extends Component {
 }
 
 export default CreatNewAccount;
-
-
-      
-    
-    
-  
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         username: 'username',
-    //         email: 'email',
-    //         password: 'password',
-    //         firstName: 'firstName',
-    //         lastName: 'lastName',
-    //         img: 'img',
-    //     }
-
-    //     this.handleChange_username = this.handleChange_username.bind(this);
-    //     this.handleChange_email = this.handleChange_email.bind(this);
-    //     this.handleChange_password = this.handleChange_password.bind(this);
-    //     this.handleChange_firstName = this.handleChange_firstName.bind(this);
-    //     this.handleChange_lastName = this.handleChange_lastName.bind(this);
-    //     this.handleChange_img = this.handleChange_img.bind(this);
-    //     this.handleSubmit = this.handleSubmit.bind(this);
-    // }
-
-    // handleChange_username(event) {
-    //     this.setState({username: event.target.value});
-    //     console.log(this.state.username);
-    // }
-    // handleChange_email(event) {
-    //     this.setState({email: event.target.value});
-    //     console.log(this.state.email);
-    // }
-    // handleChange_password(event) {
-    //     this.setState({password: event.target.value});
-    //     console.log(this.state.password);
-    // }
-    // handleChange_firstName(event) {
-    //     this.setState({firstName: event.target.value});
-    //     console.log(this.state.firstName);
-    // }
-    // handleChange_lastName(event) {
-    //     this.setState({lastName: event.target.value});
-    //     console.log(this.state.lastName);
-    // }
-    // handleChange_img(event) {
-    //     this.setState({img: event.target.value});
-    //     console.log(this.state.img);
-    // }
-
-    // handleSubmit(event) {
-    //     event.preventDefault();
-    //     let newUser = this.state;
-    //       axios.post('/api/users', newUser )
-    //         .then(res => {
-    //             console.log(res);
-    //         })
-    //         .catch(err => {
-    //             console.log(err); 
-    //         })          
-    //     // alert('Your new account has been created! Thank you ' + this.state.username);
-    // }

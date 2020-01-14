@@ -11,28 +11,23 @@ import MyFavorites from './component/MyFavorites';
 
 class App extends Component {
   componentDidMount() {
-    // if(this.props.match.params.id){
-    //   let id = this.props.match.params.id;
-    // window.localStorage.setItem('cacheTokenGogle', id)
-    // }
-  }
+    // window.location.href = 'http://localhost:3000/LandingPage'
+ }
  render (){
-
    return (
-    
+    //wraping the App with react router
     <BrowserRouter>
       <div className="App">
-      
-      <Route exact path='/LandingPage' component={ LandingPage } /> 
-      <Route path='/LandingPage/:id' component={ LandingPage } /> 
-      <Route exact path='/LoginPage' component={ LoginPage } />  
-      <Route exact path='/LogOutConfirmation' component={ LogOutConfirmation } />  
-      <Route exact path='/CreatNewAccount' component={ CreatNewAccount } /> 
-      <Route exact path='/MyAccount' component={ MyAccount } /> 
-      <Route exact path='/Cities' component={ Cities } />  
-      <Route exact path='/ChosenCity/:id' component={ ChosenCity } />  
-      <Route exact path='/MyFavorites' component={ MyFavorites } />  
-
+        <Route exact path='/LandingPage' component={ LandingPage } /> 
+        <Route exact path='/' component={ LandingPage } /> 
+        <Route path='/LandingPage/:id' component={ LandingPage } /> 
+        <Route exact path='/LoginPage' component={ LoginPage } />  
+        <Route exact path='/LogOutConfirmation' component={ LogOutConfirmation } />  
+        <Route exact path='/CreatNewAccount' component={ CreatNewAccount } /> 
+        <Route exact path='/MyAccount' component={ MyAccount } /> 
+        <Route exact path='/Cities' component={ Cities } />  
+        <Route exact path='/ChosenCity/:id' component={ ChosenCity } />  
+        <Route exact path='/MyFavorites' component={ MyFavorites } />  
       </div> 
     </BrowserRouter>
    );

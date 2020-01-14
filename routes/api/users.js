@@ -15,10 +15,7 @@ router.get('/', (req, res) => {
         .then(cities => res.json(cities))
 });
 
-
 // @route  POST api/users
-// @desc Register a new user
-// @access Public
 router.post('/', [
     // email must be an email
     check('email').isEmail(),
@@ -84,7 +81,7 @@ router.post('/', [
 
 });
 
-
+// Adding and removing favorites by toggle click function that updates the array of favorites's id each time clicked
 router.put('/:id', (req, res) => {
     let newFavourite = req.body.favorites;
     let existingFavorite = [];
@@ -100,8 +97,6 @@ router.put('/:id', (req, res) => {
             existingFavorite.push( newFavourite )
         }    
         elUser.favorites =  existingFavorite;
-        console.log("ADIOSSS"); 
-        console.log(elUser)
     
         User.findByIdAndUpdate({_id:req.params.id}, elUser)
         .then(function(){
@@ -112,16 +107,6 @@ router.put('/:id', (req, res) => {
     })
 
 });
-
-router.delete('/:id', function(req, res, next) {
-    User.findByIdAndRemove({
-        _id:req.params.id
-    }).then(function(user){
-        res.send(user);
-    })
-    res.send({type:'DELETE'});
-})
-
 
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import uuid from 'uuid/v4';
 
+//Comments component embeded in the Itinerary component - where users can comment and edit/delete their comments
 class Comments extends Component {
     constructor() {
         super()
@@ -26,6 +27,7 @@ class Comments extends Component {
         this.HandleSend = this.HandleSend.bind(this);
     }
     componentDidMount() {
+        //Changing the comments top bar with info regarding how many comments are inside the Comments component
         let itineraryId = this.props.itinerary._id;
         let commentNumber = this.props.itinerary.comments.length
         if(commentNumber === 1){
@@ -39,11 +41,13 @@ class Comments extends Component {
         this.setState({ viewOrHideComments: 'View all ' + commentNumber +' comments ...'})
         this.setState({ username: window.localStorage.getItem('userUsername')});   
         
+        // acquiring all itineraries from mongoDB
         axios.get('/api/itineraries')
         .then(res => {
             console.log(res.data);
         })
     }
+    //Delete a specific comment by clicking and acquiring the comment id and updating the comments array accordingly
     handleDelete = (comment) => {
         let itineraryId = this.props.itinerary._id
         let commentId = comment.id;
@@ -57,11 +61,10 @@ class Comments extends Component {
                 importedComment: res.data.comments,
                 placeHolder: 'cleared'
             });
-            console.log(res);
         }).catch (err => {
-            console.log(err);
         })
     }
+    //Editing a specific comment by clicking and acquiring the comment id and updating the comments array accordingly
     handleEdit = () => {
         this.setState({ editClass_display: !this.state.editClass_display})
         if(this.state.editClass_display === true) {
@@ -70,6 +73,7 @@ class Comments extends Component {
             this.setState({ editClass: 'editClass-hide' })
         }
     }
+    //Button for changing the spesific comments text with the new text introduced by the user
     HandleEditSend = () => {
         let itineraryId = this.props.itinerary._id
         let commentId = this.state.selectedItem;
@@ -83,9 +87,7 @@ class Comments extends Component {
                 importedComment: res.data.comments,
                 placeHolder: 'cleared'
             });
-            console.log(res);
         }).catch (err => {
-            console.log(err);
         })
 
         this.setState({ 
@@ -96,10 +98,12 @@ class Comments extends Component {
         this.setState({ editedComment: ''})
         
     }
+    //Closing the comment's edit window
     handleCloseEdit = () => {
         this.setState({ editClass_display: !this.state.editClass_display})
         this.setState({ editClass: 'editClass-hide' })
     }
+    //Clicking ontop of a comment to show/hide the edit/delete icons
     handleClick = () => {
         this.setState({display: !this.state.display})
         if(this.state.display === true) {
@@ -110,6 +114,7 @@ class Comments extends Component {
             this.setState({ viewOrHideComments: this.state.commentNumber })
         }
     }
+    //Showing edit/delete icons only on the clicked comment
     determineItemStyle = (comment) => {
         if(this.state.selectedItem === comment.id){
             this.setState({selectedItem: ''})
@@ -117,6 +122,7 @@ class Comments extends Component {
         this.setState({selectedItem: comment.id})
         }
     } 
+    //Sending a new comment
     HandleSend = (e) => {
         let itineraryId = this.props.itinerary._id
         axios.put('/api/itineraries/' + itineraryId , {
@@ -129,7 +135,6 @@ class Comments extends Component {
             });
             this.setState({placeHolder:''})
         }).catch (err => {
-            console.log(err);
         })
         this.setState({comment: ''});
     }
@@ -137,11 +142,11 @@ class Comments extends Component {
     // Each type action changes the "comment" inside the state of this component.
     handleWriting = (event) => {
         this.setState({comment: event.target.value});
-        console.log(this.state.comment);  
     }
+    // The writing inside the comment edit input. 
+    // Each type action changes the "editedComment" inside the state of this component.
     handleWritingEdit = (event) => {
         this.setState({editedComment: event.target.value});
-        console.log(this.state.editedComment);  
     }
     render () {
         let itineraryComments = this.state.importedComment;
@@ -153,8 +158,7 @@ class Comments extends Component {
                     </p>
                 )
             }
-        })
-            
+        }) 
         let myCommentHtml = itineraryComments.map((comment, i)=> {
             return(
             <div className="comment-div-main" key={comment.id}>

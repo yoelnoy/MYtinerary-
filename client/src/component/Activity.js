@@ -19,12 +19,14 @@ class Activity extends Component {
         }
     }
     componentDidMount(){ 
+        // getting itineraries's titles for activity matching
         let itineraryTitle = this.props.itinerary.title
+        // getting cities and cities activites
         this.props.getCitiesActivity() 
         this.props.getActivities()  
-        
     }
 
+    // toggeling between opening/closing the activiy component
     handleClick = () => {
         this.setState({ display: !this.state.display})
         if(this.state.display === true){
@@ -37,12 +39,11 @@ class Activity extends Component {
             this.setState({ arrowDirection: 'fas fa-chevron-up fa-2x arrow-down'})
             this.setState({ activitiesShowOrHide: 'activity-show'})
             this.setState({ viewActivities: 'Hide activities'})
-
         }
+
         let itineraryTitle = this.props.itinerary.title
-        console.log(itineraryTitle);
         let id = this.props.activities;
-        console.log(id);
+        // pushing activities with the same itinerary name to matchingActivities array 
         let matchingActivities = []
         for(let i = 0 ; i < id.length ; i++){
             if(id[i].itinerary === itineraryTitle ){
@@ -92,6 +93,7 @@ class Activity extends Component {
     }
 }
 
+//Maping theses arrays to props in order to use them inside the app throug Redux
 const mapStateToProps = (state) => {
     return {
         activities: state.activities.activities,
