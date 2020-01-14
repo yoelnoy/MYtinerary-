@@ -50,11 +50,13 @@ class CitiesList extends Component {
     })  
     }
 
+    // Obtaining the letters typed by the user and updating the state inorder to filter the list
     updateSearch(event) {
         this.setState({search:event.target.value.substr(0, 20)})    
     }
 
     render() {
+        // After filtering the array of cities by the letters typed by the user, iterating over the filtered array and showing results in html
         let filteredCities = this.props.cities
             .filter((city) =>  city.name.toLowerCase()
                 .startsWith(this.state.search.toLowerCase()));  
