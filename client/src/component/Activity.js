@@ -5,7 +5,7 @@ import { getActivities } from '../store/actions/activityAction';
 import { getCitiesActivity } from '../store/actions//activityAction';
 import uuid from 'uuid/v4';
 
-
+// Part of the itinerary cpmponent. Show all the activities within each itinerary in a slide
 class Activity extends Component {
     constructor() {
         super()
